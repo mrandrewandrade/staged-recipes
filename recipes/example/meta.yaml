@@ -1,25 +1,13 @@
-# Note: there are many handy hints in comments in this example -- remove them when you've finalized your recipe
-
-# Jinja variables help maintain the recipe as you'll update the version only here.
-# Using the name variable with the URL in line 14 is convenient
-# when copying and pasting from another recipe, but not really needed.
-{% set name = "simplejson" %}
-{% set version = "3.8.2" %}
+{% set name = "WeasyPrint" %}
+{% set version = "v47" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  # If getting the source from GitHub, remove the line above,
-  # uncomment the line below, and modify as needed.
-  # url: https://github.com/simplejson/{{ name }}/archive/{{ version }}.tar.gz
-  sha256: d58439c548433adcda98e695be53e526ba940a4b9c44fb9a05d92cd495cdd47f
-  # sha256 is the preferred checksum -- you can get it for a file with:
-  #  `openssl sha256 <file name>`.
-  # You may need the openssl package, available on conda-forge:
-  #  `conda install openssl -c conda-forge``
+  url: https://github.com/Kozea/{{ name }}/archive/{{ version }}.tar.gz
+  sha256: 707b3b54c6552c99f67682178316b653ed229b03ffb17158f7374e99829338eb
 
 build:
   # Uncomment the following line if the package is pure Python and the recipe is exactly the same for all platforms.
@@ -38,45 +26,47 @@ requirements:
     # Compilers are named 'c', 'cxx' and 'fortran'.
     - {{ compiler('c') }}
   host:
-    - python
+    - python>3.5
     - pip
+    - setuptools>=39.2.0
+    - cffi>=0.6
+    - html5lib>=0.999999999
+    - cairocffi>=0.9.0
+    - tinycss2>=1.0.0
+    - cssselect2>=0.1
+    - CairoSVG>=2.4.0
+    - Pyphen>=0.8
+    
   run:
-    - python
+    - python>3.5
 
 test:
   # Some packages might need a `test/commands` key to check CLI.
   # List all the packages/modules that `run_test.py` imports.
   imports:
-    - simplejson
-    - simplejson.tests
+    - pytest-runner
+    - pytest-cov
+    - pytest-flake8
+    - pytest-isort
 
 about:
-  home: http://github.com/simplejson/simplejson
-  # Remember to specify the license variants for BSD, Apache, GPL, and LGPL.
-  # Prefer the short version, e.g: GPL-2.0 instead of GNU General Public License version 2.0
-  # See https://opensource.org/licenses/alphabetical
-  license: MIT
-  # The license_family, i.e. "BSD" if license is "BSD-3-Clause". (optional)
-  license_family: MIT
-  # It is strongly encouraged to include a license file in the package,
-  # (even if the license doesn't require it) using the license_file entry.
-  # See http://conda.pydata.org/docs/building/meta-yaml.html#license-file
-  license_file: LICENSE.txt
-  summary: 'Simple, fast, extensible JSON encoder/decoder for Python'
+  home: https://github.com/Kozea/WeasyPrint
+  license: BSD-3-Clause  license_family: BSD
+  license_file: LICENSE
+  summary: 'WeasyPrint converts web documents (HTML with CSS, SVG, …) to PDF'
 
   # The remaining entries in this section are optional, but recommended.
   description: |
-    simplejson is a simple, fast, complete, correct and extensible
-    JSON <http://json.org> encoder and decoder for Python 2.5+ and
-    Python 3.3+. It is pure Python code with no dependencies, but includes
-    an optional C extension for a serious speed boost.
-  doc_url: http://simplejson.readthedocs.io/
-  dev_url: https://github.com/simplejson/simplejson
+    WeasyPrint is a smart solution helping web developers to create PDF
+    documents. It turns simple HTML pages into gorgeous statistical
+    reports, invoices, tickets…
+
+  doc_url: https://weasyprint.readthedocs.io/en/stable/
+  dev_url: https://github.com/Kozea/WeasyPrint
 
 extra:
   recipe-maintainers:
     # GitHub IDs for maintainers of the recipe.
     # Always check with the people listed below if they are OK becoming maintainers of the recipe. (There will be spam!)
-    - LisaSimpson
-    - LandoCalrissian
-
+    - mrandrewandrade
+    - liZe
